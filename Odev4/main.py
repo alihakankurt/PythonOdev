@@ -55,6 +55,16 @@ if __name__ == "__main__":
 
     connection.close()
 
-    print(f'Jaccard similarity: {jaccard_similarity(text1, text2)}')
-    print(f'Levenshtein distance: {levenshtein(text1, text2)}')
-    print(f'Wagner-Fisher distance: {wagner_fisher(text1, text2)}')
+    jaccard_similarity_result: float = jaccard_similarity(text1, text2)
+    levenshtein_result: int = levenshtein(text1, text2)
+    wagner_fisher_result: int = wagner_fisher(text1, text2)
+
+    result: str = f'Text 1: {text1}\n' \
+                  f'Text 2: {text2}\n' \
+                  f'Jaccard similarity: {jaccard_similarity_result}\n' \
+                  f'Levenshtein distance: {levenshtein_result}\n' \
+                  f'Wagner-Fisher distance: {wagner_fisher_result}'
+
+    print(result)
+    with open('result.txt', 'w') as file:
+        file.write(result)
