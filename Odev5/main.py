@@ -1,7 +1,7 @@
 import sqlite3
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QLineEdit, QFormLayout, QPushButton, QMessageBox
+from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QLineEdit, QVBoxLayout, QHBoxLayout, QPushButton, QRadioButton, QMessageBox, QFileDialog
 
 if __name__ == "__main__":
     # State
@@ -41,21 +41,22 @@ if __name__ == "__main__":
     registerButton.setFixedHeight(50)
     registerButton.setFont(font)
 
-    authLayout: QFormLayout = QFormLayout()
-    authLayout.addRow(usernameText)
-    authLayout.addRow(passwordText)
-    authLayout.addRow(loginButton)
-    authLayout.addRow(registerButton)
-    authLayout.setContentsMargins(20, 200, 20, 200)
-    authLayout.setSpacing(40)
+    authLayout: QVBoxLayout = QVBoxLayout()
+    authLayout.addWidget(usernameText)
+    authLayout.addWidget(passwordText)
+    authLayout.addWidget(loginButton)
+    authLayout.addWidget(registerButton)
+    authLayout.setAlignment(Qt.AlignmentFlag.AlignVCenter)
+    authLayout.setContentsMargins(20, 20, 20, 20)
+    authLayout.setSpacing(30)
 
     authWidget: QWidget = QWidget()
     authWidget.setLayout(authLayout)
 
     # Menu Widget
-    compareButton: QPushButton = QPushButton("Karşılaştır")
-    compareButton.setFixedHeight(50)
-    compareButton.setFont(font)
+    comparisonButton: QPushButton = QPushButton("Karşılaştırma")
+    comparisonButton.setFixedHeight(50)
+    comparisonButton.setFont(font)
 
     operationsButton: QPushButton = QPushButton("İşlemler")
     operationsButton.setFixedHeight(50)
@@ -65,15 +66,78 @@ if __name__ == "__main__":
     logoutButton.setFixedHeight(50)
     logoutButton.setFont(font)
 
-    menuLayout: QFormLayout = QFormLayout()
-    menuLayout.addRow(compareButton)
-    menuLayout.addRow(operationsButton)
-    menuLayout.addRow(logoutButton)
-    menuLayout.setContentsMargins(20, 200, 20, 200)
-    menuLayout.setSpacing(40)
+    menuLayout: QVBoxLayout = QVBoxLayout()
+    menuLayout.addWidget(comparisonButton)
+    menuLayout.addWidget(operationsButton)
+    menuLayout.addWidget(logoutButton)
+    menuLayout.setAlignment(Qt.AlignmentFlag.AlignVCenter)
+    menuLayout.setContentsMargins(20, 20, 20, 20)
+    menuLayout.setSpacing(30)
 
     menuWidget: QWidget = QWidget()
     menuWidget.setLayout(menuLayout)
+
+    # Comparison Widget
+    jaccardSimilarityButton: QRadioButton = QRadioButton("Jaccard")
+    jaccardSimilarityButton.setFont(font)
+    jaccardSimilarityButton.setChecked(True)
+
+    wagnerFischerButton: QRadioButton = QRadioButton("Wagner-Fischer")
+    wagnerFischerButton.setFont(font)
+
+    algorithmLayout: QHBoxLayout = QHBoxLayout()
+    algorithmLayout.addWidget(jaccardSimilarityButton)
+    algorithmLayout.addWidget(wagnerFischerButton)
+    algorithmLayout.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+
+    file1PathText: QLineEdit = QLineEdit()
+    file1PathText.setPlaceholderText("1. Metin Dosyası")
+    file1PathText.setFixedHeight(50)
+    file1PathText.setFont(font)
+
+    file1PathDialogButton: QPushButton = QPushButton("Dosya Seç")
+    file1PathDialogButton.setFont(font)
+
+    file1Layout: QHBoxLayout = QHBoxLayout()
+    file1Layout.addWidget(file1PathText)
+    file1Layout.addWidget(file1PathDialogButton)
+    file1Layout.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+
+    file2PathText: QLineEdit = QLineEdit()
+    file2PathText.setPlaceholderText("2. Metin Dosyası")
+    file2PathText.setFixedHeight(50)
+    file2PathText.setFont(font)
+
+    file2PathDialogButton: QPushButton = QPushButton("Dosya Seç")
+    file2PathDialogButton.setFont(font)
+
+    file2Layout: QHBoxLayout = QHBoxLayout()
+    file2Layout.addWidget(file2PathText)
+    file2Layout.addWidget(file2PathDialogButton)
+    file2Layout.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+
+    compareButton: QPushButton = QPushButton("Karşılaştır")
+    compareButton.setFixedHeight(50)
+    compareButton.setFont(font)
+
+    comparisonGoBackButton: QPushButton = QPushButton("Geri Dön")
+    comparisonGoBackButton.setFixedHeight(50)
+    comparisonGoBackButton.setFont(font)
+
+    comparisonLayout: QVBoxLayout = QVBoxLayout()
+    comparisonLayout.addLayout(file1Layout)
+    comparisonLayout.addLayout(file2Layout)
+    comparisonLayout.addLayout(algorithmLayout)
+    comparisonLayout.addWidget(compareButton)
+    comparisonLayout.addWidget(comparisonGoBackButton)
+    comparisonLayout.setAlignment(Qt.AlignmentFlag.AlignVCenter)
+    comparisonLayout.setContentsMargins(20, 20, 20, 20)
+    comparisonLayout.setSpacing(30)
+
+    comparisonWidget: QWidget = QWidget()
+    comparisonWidget.setFixedWidth(800)
+    comparisonWidget.setFixedHeight(600)
+    comparisonWidget.setLayout(comparisonLayout)
 
     # Operations Widget
     passwordOperationButton: QPushButton = QPushButton("Şifre Değiştirme")
@@ -84,11 +148,12 @@ if __name__ == "__main__":
     operationsGoBackButton.setFixedHeight(50)
     operationsGoBackButton.setFont(font)
 
-    operationsLayout: QFormLayout = QFormLayout()
-    operationsLayout.addRow(passwordOperationButton)
-    operationsLayout.addRow(operationsGoBackButton)
-    operationsLayout.setContentsMargins(20, 200, 20, 200)
-    operationsLayout.setSpacing(40)
+    operationsLayout: QVBoxLayout = QVBoxLayout()
+    operationsLayout.addWidget(passwordOperationButton)
+    operationsLayout.addWidget(operationsGoBackButton)
+    operationsLayout.setAlignment(Qt.AlignmentFlag.AlignVCenter)
+    operationsLayout.setContentsMargins(20, 20, 20, 20)
+    operationsLayout.setSpacing(30)
 
     operationsWidget: QWidget = QWidget()
     operationsWidget.setLayout(operationsLayout)
@@ -112,12 +177,13 @@ if __name__ == "__main__":
     changePasswordButton.setFixedHeight(50)
     changePasswordButton.setFont(font)
 
-    passwordChangeLayout: QFormLayout = QFormLayout()
-    passwordChangeLayout.addRow(newPasswordText)
-    passwordChangeLayout.addRow(confirmNewPasswordText)
-    passwordChangeLayout.addRow(changePasswordButton)
-    passwordChangeLayout.setContentsMargins(20, 200, 20, 200)
-    passwordChangeLayout.setSpacing(40)
+    passwordChangeLayout: QVBoxLayout = QVBoxLayout()
+    passwordChangeLayout.addWidget(newPasswordText)
+    passwordChangeLayout.addWidget(confirmNewPasswordText)
+    passwordChangeLayout.addWidget(changePasswordButton)
+    passwordChangeLayout.setAlignment(Qt.AlignmentFlag.AlignVCenter)
+    passwordChangeLayout.setContentsMargins(20, 20, 20, 20)
+    passwordChangeLayout.setSpacing(30)
 
     passwordChangeWidget: QWidget = QWidget()
     passwordChangeWidget.setLayout(passwordChangeLayout)
@@ -159,8 +225,9 @@ if __name__ == "__main__":
     registerButton.clicked.connect(registerButtonClicked)
 
     # Menu Button Callbacks
-    def compareButtonClicked() -> None:
-        pass
+    def comparisonButtonClicked() -> None:
+        window.centralWidget().setParent(None)
+        window.setCentralWidget(comparisonWidget)
 
     def operationsButtonClicked() -> None:
         window.centralWidget().setParent(None)
@@ -173,9 +240,60 @@ if __name__ == "__main__":
         window.centralWidget().setParent(None)
         window.setCentralWidget(authWidget)
 
-    compareButton.clicked.connect(compareButtonClicked)
+    comparisonButton.clicked.connect(comparisonButtonClicked)
     operationsButton.clicked.connect(operationsButtonClicked)
     logoutButton.clicked.connect(logoutButtonClicked)
+
+    # Comparison Button Callbacks
+    def filePathDialogButtonClicked(filePathText: QLineEdit) -> None:
+        file1PathDialog: QFileDialog = QFileDialog()
+        file1PathDialog.setFileMode(QFileDialog.FileMode.ExistingFile)
+        file1PathDialog.setNameFilter("Text Files (*.txt)")
+        file1PathDialog.setViewMode(QFileDialog.ViewMode.List)
+        if file1PathDialog.exec() == QFileDialog.DialogCode.Accepted:
+            filePathText.setText(file1PathDialog.selectedFiles()[0])
+
+    def compareButtonClicked() -> None:
+        try:
+            with open(file1PathText.text()) as file1:
+                file1Content: str = "".join(filter(str.isalnum, file1.read()))
+            with open(file2PathText.text()) as file2:
+                file2Content: str = "".join(filter(str.isalnum, file2.read()))
+        except:
+            QMessageBox.warning(window, "Hata", "Dosya okunurken bir hata oluştu", QMessageBox.StandardButton.Ok)
+            return
+
+        if jaccardSimilarityButton.isChecked():
+            text1Set: set = set(file1Content)
+            text2Set: set = set(file2Content)
+            intersection: set = text1Set & text2Set
+            union: set = text1Set | text2Set
+            jaccardSimilarity: float = len(intersection) / len(union)
+            QMessageBox.information(window, "Sonuç", f"Jaccard Benzerliği: {jaccardSimilarity}", QMessageBox.StandardButton.Ok)
+        elif wagnerFischerButton.isChecked():
+            m: int = len(file1Content)
+            n: int = len(file2Content)
+            currentRow: list[int] = [y for y in range(n + 1)]
+            for i in range(1, n + 1):
+                previousRow = currentRow
+                currentRow = [i] + [0] * m
+                for j in range(1, m + 1):
+                    add = previousRow[j] + 1
+                    delete = currentRow[j - 1] + 1
+                    change = previousRow[j - 1] + (file1Content[i - 1] != file2Content[j - 1])
+                    currentRow[j] = min(add, delete, change)
+            QMessageBox.information(window, "Sonuç", f"Wagner-Fischer (Levenshtein): {currentRow[m]}", QMessageBox.StandardButton.Ok)
+        else:
+            QMessageBox.critical(window, "Hata", "Algoritma seçilmedi", QMessageBox.StandardButton.Ok)
+
+    def comparisonGoBackButtonClicked() -> None:
+        window.centralWidget().setParent(None)
+        window.setCentralWidget(menuWidget)
+
+    file1PathDialogButton.clicked.connect(lambda: filePathDialogButtonClicked(file1PathText))
+    file2PathDialogButton.clicked.connect(lambda: filePathDialogButtonClicked(file2PathText))
+    compareButton.clicked.connect(compareButtonClicked)
+    comparisonGoBackButton.clicked.connect(comparisonGoBackButtonClicked)
 
     # Operations Button Callbacks
     def passwordOperationButtonClicked() -> None:
